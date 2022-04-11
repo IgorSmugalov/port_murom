@@ -1,0 +1,19 @@
+//breakpoints
+$sm: 576px;
+$md: 768px;
+$lg: 992px;
+$xl: 1200px;
+$xxl: 1400px;
+
+//Container breakpoints
+$container-sm: 540px;
+$container-md: 720px;
+$container-lg: 960px;
+$container-xl: 1140px;
+$container-xxl: 1200px;
+
+@mixin breakpoint($size) {
+	@media (min-width: $size) {
+		@content;
+	}
+}

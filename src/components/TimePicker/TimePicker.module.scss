@@ -1,0 +1,12 @@
+@import '/src/styles/colors';
+
+.__timeSelector {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	width: 100%;
+	text-align: center;
+	h4 {
+		width: 100%;
+	}
+}
