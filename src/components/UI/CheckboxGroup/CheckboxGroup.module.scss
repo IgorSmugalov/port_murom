@@ -1,0 +1,39 @@
+@import '/src/styles/colors';
+
+.__checkboxGroup {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	&__item {
+		margin: 1em 0.5em;
+		input {
+			display: none;
+			& + label {
+				user-select: none;
+				display: inline-flex;
+				padding: 1em;
+				align-items: center;
+				border: 3px solid $blue7;
+				background-color: $blue7;
+				line-height: 1em;
+				&::before {
+					display: inline-block;
+					margin-right: 0.5em;
+					flex-grow: 0;
+					flex-shrink: 0;
+					width: 1em;
+					height: 1em;
+					border: 1px solid $blue3;
+					border-radius: 0.1em;
+					content: '';
+				}
+			}
+			&:checked + label {
+				border: 3px solid $blue5;
+				&::before {
+					background-color: $blue3;
+				}
+			}
+		}
+	}
+}

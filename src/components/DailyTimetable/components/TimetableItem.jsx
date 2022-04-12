@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import React from 'react';
-import Button from '../UI/Button/Button';
+import Button from '../../UI/Button/Button';
 import styles from './TimetableItem.module.scss';
 
 const TimetableItem = ({ deleteTrip, selectTrip, trip }) => {

@@ -8,10 +8,15 @@
 	justify-content: center;
 	align-items: center;
 	grid-template-areas:
+		'header header'
 		'datePicker timePicker'
 		'shipSelector shipSelector'
 		'tripSelector tripSelector'
 		'editorButtons editorButtons';
+	& > h2 {
+		grid-area: header;
+		text-align: center;
+	}
 	&__datePicker {
 		grid-area: datePicker;
 	}

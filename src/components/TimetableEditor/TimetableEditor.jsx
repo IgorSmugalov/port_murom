@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import Container from '../Container/Container';
 import TimePicker from '../TimePicker/TimePicker';
 import DatePicker from '../DatePicker/DatePicker';
-import ShipSelector from './components/ShipSelector';
-import TripSelector from './components/TripSelector';
+import RadioGroup from '../UI/RadioGroup/RadioGroup';
 import Button from '../UI/Button/Button';
 import getData from '../../data/getData.js';
 import dayjs from 'dayjs';
@@ -23,8 +22,8 @@ const TimetableEditor = ({ addTrip }) => {
 	const shipsList = getData('ships');
 	const typesList = getData('trips');
 
-	function setInitialRoundedTime(date, round = 10) {
-		if (date === undefined || date === null) {
+	function setInitialRoundedTime(date, round = 10) { // Округляет время с шагом 10 минут, принимает аргументом Dayjs-объект или UNIX-time, возвращает Dayjs-объект с округленным временем, при вызове без аргумента возвращает текущее округленное время 
+		if (date === undefined) {
 			return dayjs()
 				.startOf('minute')
 				.minute(Math.round(dayjs().minute() / round) * round);
@@ -41,12 +40,12 @@ const TimetableEditor = ({ addTrip }) => {
 		}
 	}
 
-	const setDepartureAndUpdateArrival = (newDeparture) => {
+	const setDepartureAndArrival = (newDeparture) => {
 		setDepartureTime(newDeparture);
 		setArrivalTime(newDeparture.add(durationTime));
 	};
 
-	const setArrivalAndUpdateDuration = (newArrival) => {
+	const setArrivalAndDuration = (newArrival) => {
 		if (newArrival.diff(departureTime, 'minute') >= 30) {
 			setArrivalTime(newArrival);
 			setDurationTime(dayjs.duration(newArrival.diff(departureTime)));
@@ -55,12 +54,13 @@ const TimetableEditor = ({ addTrip }) => {
 		}
 	};
 
-	const setDurationAndUpdateArrival = (newDuratoin) => {
+	const setDurationAndArrival = (newDuratoin) => {
 		setDurationTime(newDuratoin);
 		setArrivalTime(departureTime.add(newDuratoin));
 	};
 
 	function setNewTrip(shipName, tripType, departureTime, arrivalTime) {
+		// Времменная проверка заполненности всех полей
 		if (!!shipName && !!tripType && departureTime && arrivalTime) {
 			departureTime = dayjs(departureTime).valueOf();
 			arrivalTime = dayjs(arrivalTime).valueOf();
@@ -89,10 +89,12 @@ const TimetableEditor = ({ addTrip }) => {
 	return (
 		<Container>
 			<div className={styles.__editor}>
+				<h2>Добавить рейс</h2>
 				<div className={styles.__datePicker}>
 					<DatePicker
 						date={departureTime}
-						callback={setDepartureAndUpdateArrival}
+						setDate={setDepartureAndArrival}
+						name='newTripDate'
 					/>
 				</div>
 				<div className={styles.__timePicker}>
@@ -100,34 +102,36 @@ const TimetableEditor = ({ addTrip }) => {
 					<TimePicker
 						name='departureTime'
 						time={departureTime}
-						callback={setDepartureAndUpdateArrival}
+						callback={setDepartureAndArrival}
 					/>
-					<h3>Длительность: {durationTime.format('HH:mm')}</h3>
+					<h3>Длительность:</h3>
 					<DurationSelector
 						departure={departureTime}
 						arrival={arrivalTime}
 						duration={durationTime}
-						callback={setDurationAndUpdateArrival}
+						callback={setDurationAndArrival}
 					/>
 					<h3>Прибытие: {arrivalTime.format('DD MMMM HH:mm')}</h3>
 					<TimePicker
 						name='arrivalTime'
 						time={arrivalTime}
-						callback={setArrivalAndUpdateDuration}
+						callback={setArrivalAndDuration}
 					/>
 				</div>
 				<div className={styles.__shipSelector}>
-					<ShipSelector
-						value={shipName}
-						callback={setShipName}
-						shipList={shipsList}
+					<RadioGroup
+						name='shipSelector'
+						selectedValue={shipName}
+						allValues={shipsList}
+						setValue={setShipName}
 					/>
 				</div>
 				<div className={styles.__tripSelector}>
-					<TripSelector
-						value={tripType}
-						callback={setTripType}
-						typesList={typesList}
+					<RadioGroup
+						name='tripSelector'
+						selectedValue={tripType}
+						allValues={typesList}
+						setValue={setTripType}
 					/>
 				</div>
 				<div className={styles.__editorButtons}>

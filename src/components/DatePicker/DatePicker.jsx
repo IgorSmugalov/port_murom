@@ -5,31 +5,28 @@ import DateSelector from './components/DateSelector';
 
 import styles from './DatePicker.module.scss';
 
-function DatePicker({ date, callback }) {
-	// date: dayJsObject
-	// callback: function
-	// about naming: using 'day' in variable names, implies that it is the day of the week, 'dates' using for day of the month as number
+function DatePicker({ date, name, setDate }) {
+	// date: initial date, may be only dayJsObject
+	// about naming: using 'day' in variable names, implies that this is the day of the week, 'dates' using for day of the month as number
 
 	const [calendarValues, setCalendarValues] = useState(date);
 	const setValue = (event) => {
 		const key = event.target.name;
 		const value = Number(event.target.value);
 		switch (key) {
-			case 'increaseDisplayedYear':
+			case `increaseDisplayedYear-${name}`:
 				return setCalendarValues(calendarValues.add(1, 'year'));
-			case 'decreaseDisplayedYear':
+			case `decreaseDisplayedYear-${name}`:
 				return setCalendarValues(calendarValues.subtract(1, 'year'));
-			case 'switchDisplayedMonth':
+			case `switchDisplayedMonth-${name}`:
 				return setCalendarValues(calendarValues.month(value));
-			case 'selectDate':
-				return callback
-					? callback(
-							date
-								.year(calendarValues.year())
-								.month(calendarValues.month())
-								.date(value)
-					  )
-					: console.error('no callback for DateSelector');
+			case `selectDate-${name}`:
+				return setDate(
+					date
+						.year(calendarValues.year())
+						.month(calendarValues.month())
+						.date(value)
+				);
 			default:
 				console.error('Incorrect input');
 				break;
@@ -38,15 +35,21 @@ function DatePicker({ date, callback }) {
 
 	return (
 		<div className={styles.__calendar}>
-			<YearSelector setYear={setValue} year={calendarValues.year()} />
+			<YearSelector
+				setYear={setValue}
+				year={calendarValues.year()}
+				name={name}
+			/>
 			<MonthSelector
 				setMonth={setValue}
 				displayedMonth={calendarValues.month()}
+				name={name}
 			/>
 			<DateSelector
 				setDate={setValue}
 				displayedYearAndMonth={calendarValues}
 				selectedDate={date}
+				name={name}
 			/>
 		</div>
 	);

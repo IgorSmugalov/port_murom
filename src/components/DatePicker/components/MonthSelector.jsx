@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './MonthSelector.module.scss';
 
-function MonthSelector({ displayedMonth, setMonth }) {
+function MonthSelector({ displayedMonth, setMonth, name }) {
 	const monthsNamesArray = [
 		'Январь',
 		'Февраль',
@@ -23,13 +23,13 @@ function MonthSelector({ displayedMonth, setMonth }) {
 				<div key={month}>
 					<input
 						type='radio'
-						name='switchDisplayedMonth'
-						id={month}
+						name={`switchDisplayedMonth-${name}`}
+						id={`${name}-month-${month}`}
 						checked={index === displayedMonth}
 						value={index}
 						onChange={(event) => setMonth(event)}
 					/>
-					<label htmlFor={month}>{month}</label>
+					<label htmlFor={`${name}-month-${month}`}>{month}</label>
 				</div>
 			))}
 		</div>

@@ -1,14 +1,14 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import styles from './App.module.scss';
+import DailyTimetable from './components/DailyTimetable/DailyTimetable';
 
-import Timetable from './components/Timetable/Timetable';
 import TimetableEditor from './components/TimetableEditor/TimetableEditor';
 import TripInfo from './components/TripInfo/TripInfo';
 
 function App() {
 	const [tripsList, setTripsList] = useState(() => getTrips('trips'));
-	const [tripInfo, setTripInfo] = useState();
+	const [selectedTrip, setSelectedTrip] = useState();
 
 	function getTrips(key) {
 		if (localStorage.getItem(key)) {
@@ -21,6 +21,16 @@ function App() {
 		() => localStorage.setItem('trips', JSON.stringify(tripsList)),
 		[tripsList]
 	);
+
+	// function sortTrips(trips) {
+	// 	trips.sort((a, b) => {
+	// 		return a.departureTime < b.departureTime
+	// 			? -1
+	// 			: a.departureTime > b.departureTime
+	// 			? 1
+	// 			: 0;
+	// 	});
+	// }
 
 	function addTrip(newTrip) {
 		function generateId(tripsList) {
@@ -43,15 +53,23 @@ function App() {
 		});
 		setTripsList(newTripsList);
 	}
+	const deleteTrip = (id) => {
+		setTripsList(tripsList.filter((trip) => trip.id !== id));
+	};
+	const selectTrip = (id) => {
+		setSelectedTrip(tripsList.find((trip) => trip.id === id));
+	};
 
 	return (
 		<div className={styles.__app}>
-			<Timetable
+			<DailyTimetable
 				tripsList={tripsList}
-				setTripsList={setTripsList}
-				setTripInfo={setTripInfo}
+				selectTrip={selectTrip}
+				deleteTrip={deleteTrip}
 			/>
-			{tripInfo && <TripInfo trip={tripInfo} close={setTripInfo} />}
+			{selectedTrip && (
+				<TripInfo trip={selectedTrip} close={setSelectedTrip} />
+			)}
 			<TimetableEditor addTrip={addTrip} />
 		</div>
 	);

@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 
 import styles from './DateSelector.module.scss';
 
-function DateSelector({ displayedYearAndMonth, setDate, selectedDate }) {
+function DateSelector({ displayedYearAndMonth, setDate, selectedDate, name }) {
 
 	function calculateDates(month) {
 		const datesArray = [];
@@ -26,15 +26,15 @@ function DateSelector({ displayedYearAndMonth, setDate, selectedDate }) {
 					style={date === 1 ? { gridColumnStart: firstDateOffset } : null}>
 					<input
 						type='radio'
-						name='selectDate'
-						id={`day-${date}`}
+						name={`selectDate-${name}`}
+						id={`${name}-day-${date}`}
 						checked={displayedYearAndMonth
 							.date(date)
 							.isSame(selectedDate, 'day')}
 						value={date}
 						onChange={(event) => setDate(event)}
 					/>
-					<label htmlFor={`day-${date}`}>{date}</label>
+					<label htmlFor={`${name}-day-${date}`}>{date}</label>
 				</div>
 			))}
 		</div>
