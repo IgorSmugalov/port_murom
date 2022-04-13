@@ -90,7 +90,9 @@ const TimetableEditor = ({ trips: allTrips, addTrip }) => {
 		tripType,
 		departureTime,
 		arrivalTime,
-		timeCollision
+		timeCollision,
+		startTime,
+		defaultDuration
 	) {
 		// Времменная проверка заполненности всех полей и пересечения рейсов
 		if (
@@ -106,7 +108,7 @@ const TimetableEditor = ({ trips: allTrips, addTrip }) => {
 				departureTime: dayjs(departureTime).valueOf(),
 				arrivalTime: dayjs(arrivalTime).valueOf(),
 			});
-			resetNewTrip();
+			resetNewTrip(startTime, defaultDuration);
 		} else {
 			console.error('не все поля заполнены');
 		}
@@ -160,19 +162,21 @@ const TimetableEditor = ({ trips: allTrips, addTrip }) => {
 					setValue={setTripType}
 				/>
 				<div className={styles.__editor__editorButtons}>
+					<Button onClick={() => resetNewTrip(startTime, defaultDuration)}>
+						Сброс
+					</Button>
 					<Button
 						onClick={() =>
-							resetNewTrip(
+							setNewTrip(
 								shipName,
 								tripType,
 								departureTime,
 								arrivalTime,
-								timeCollision
+								timeCollision,
+								startTime,
+								defaultDuration
 							)
 						}>
-						Сброс
-					</Button>
-					<Button onClick={() => setNewTrip(startTime, defaultDuration)}>
 						Добавить рейс
 					</Button>
 				</div>

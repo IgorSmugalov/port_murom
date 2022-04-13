@@ -11,9 +11,6 @@ function TimeLine({ departure, arrival, trips, shipName, ships, collision }) {
 	const timelineLength = timelineEnd - timelineStart;
 	const hoursValues = getData('hours');
 	const hoursValuesShort = getData('hoursShort');
-
-	console.log(dayjs.duration(timelineLength).asDays());
-
 	const tripsByShipArray = (trips) => {
 		// собирает стандартный массив прогулок в объект, где ключом является название теплохода, а значением  массив со всеми рейсами данного теплохода или пустой массив в случае их отсутствия
 		const result = new Map();
