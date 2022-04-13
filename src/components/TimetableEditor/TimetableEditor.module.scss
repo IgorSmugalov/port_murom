@@ -1,37 +1,11 @@
 .__editor {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	grid-template-rows: min-content;
-	gap: 20px 20px;
-	grid-auto-flow: row;
-	justify-items: stretch;
-	justify-content: center;
-	align-items: center;
-	grid-template-areas:
-		'header header'
-		'datePicker timePicker'
-		'shipSelector shipSelector'
-		'tripSelector tripSelector'
-		'editorButtons editorButtons';
-	& > h2 {
-		grid-area: header;
+	& > h2, h3 {
 		text-align: center;
 	}
-	&__datePicker {
-		grid-area: datePicker;
-	}
-	.__timePicker {
-		grid-area: timePicker;
-	}
-	.__shipSelector {
-		grid-area: shipSelector;
-	}
-	.__tripSelector {
-		grid-area: tripSelector;
-	}
-	.__editorButtons {
+	&__editorButtons {
+		margin: 1em 0;
+		width: 100%;
 		display: flex;
 		justify-content: space-around;
-		grid-area: editorButtons;
 	}
 }

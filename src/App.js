@@ -1,10 +1,11 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import styles from './App.module.scss';
 import DailyTimetable from './components/DailyTimetable/DailyTimetable';
-
 import TimetableEditor from './components/TimetableEditor/TimetableEditor';
 import TripInfo from './components/TripInfo/TripInfo';
+
+import styles from './App.module.scss';
+
 
 function App() {
 	const [tripsList, setTripsList] = useState(() => getTrips('trips'));
@@ -21,16 +22,6 @@ function App() {
 		() => localStorage.setItem('trips', JSON.stringify(tripsList)),
 		[tripsList]
 	);
-
-	// function sortTrips(trips) {
-	// 	trips.sort((a, b) => {
-	// 		return a.departureTime < b.departureTime
-	// 			? -1
-	// 			: a.departureTime > b.departureTime
-	// 			? 1
-	// 			: 0;
-	// 	});
-	// }
 
 	function addTrip(newTrip) {
 		function generateId(tripsList) {
@@ -70,7 +61,7 @@ function App() {
 			{selectedTrip && (
 				<TripInfo trip={selectedTrip} close={setSelectedTrip} />
 			)}
-			<TimetableEditor addTrip={addTrip} />
+			<TimetableEditor trips={tripsList} addTrip={addTrip} />
 		</div>
 	);
 }

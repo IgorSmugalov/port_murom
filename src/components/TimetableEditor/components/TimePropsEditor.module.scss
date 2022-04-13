@@ -1,0 +1,12 @@
+.__timeProps {
+	display: flex;
+	gap: 1em;
+	margin: 1em 0;
+	align-items: center;
+	&__datepicker {
+		width: 40%;
+	}
+	&__timepickers {
+		width: 60%;
+	}
+}

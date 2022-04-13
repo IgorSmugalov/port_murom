@@ -3,10 +3,10 @@ import dayjs from 'dayjs';
 import getData from '../../data/getData';
 import Container from '../Container/Container';
 import DatePicker from '../DatePicker/DatePicker';
-
-import styles from './DailyTimetable.module.scss';
 import TimetableList from './components/TimetableList';
 import CheckboxGroup from '../UI/CheckboxGroup/CheckboxGroup';
+
+import styles from './DailyTimetable.module.scss';
 
 const DailyTimetable = ({ tripsList, selectTrip, deleteTrip }) => {
 	const [filteringDate, setFilteringDate] = useState(dayjs());

@@ -1,12 +1,30 @@
 @import '/src/styles/colors';
 
 .__timeSelector {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-around;
-	width: 100%;
-	text-align: center;
-	h4 {
-		width: 100%;
+	display: grid;
+	grid-template-columns: 1fr 6fr 1fr;
+	grid-template-rows: 1fr 1fr;
+	justify-items: stretch;
+	align-items: center;
+	grid-template-areas:
+		'hoursDecreaser hoursSelector hoursIncreaser'
+		'minutesDecreaser minutesSelector minutesIncreaser';
+	&__hoursIncreaser {
+		grid-area: hoursIncreaser;
+	}
+	&__hoursDecreaser {
+		grid-area: hoursDecreaser;
+	}
+	&__minutesDecreaser {
+		grid-area: minutesDecreaser;
+	}
+	&__minutesIncreaser {
+		grid-area: minutesIncreaser;
+	}
+	&__hoursSelector {
+		grid-area: hoursSelector;
+	}
+	&__minutesSelector {
+		grid-area: minutesSelector;
 	}
 }
